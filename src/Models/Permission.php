@@ -208,6 +208,11 @@ class Permission extends Model implements Sortable
 
         parent::boot();
 
+        static::saving(function (self $model) {
+            $model->slug = htmlspecialchars($model->slug);
+            $model->name = htmlspecialchars($model->name);
+        });
+
         static::deleting(function ($model) {
             $model->roles()->detach();
         });
