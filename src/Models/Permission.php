@@ -196,6 +196,17 @@ class Permission extends Model implements Sortable
 
         return $method;
     }
+    
+    public function getNameAttribute($v)
+    {
+        return htmlspecialchars($v);
+    }
+    
+    public function getSlugAttribute($v)
+    {
+        return htmlspecialchars($v);
+    }
+       
 
     /**
      * Detach models from the relationship.
@@ -207,11 +218,6 @@ class Permission extends Model implements Sortable
         static::treeBoot();
 
         parent::boot();
-
-        static::saving(function (self $model) {
-            $model->slug = htmlspecialchars($model->slug);
-            $model->name = htmlspecialchars($model->name);
-        });
 
         static::deleting(function ($model) {
             $model->roles()->detach();
