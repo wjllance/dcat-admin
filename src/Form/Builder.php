@@ -293,7 +293,7 @@ class Builder
      */
     public function getResourceId()
     {
-        return $this->id;
+        return htmlspecialchars($this->id);
     }
 
     /**
@@ -355,7 +355,7 @@ class Builder
         }
 
         if ($this->isMode(static::MODE_EDIT)) {
-            return $this->form->resource().'/'.$this->id;
+            return $this->form->resource() . '/' . $this->id;
         }
 
         if ($this->isMode(static::MODE_CREATE)) {
@@ -460,7 +460,7 @@ class Builder
      */
     public function hasRows()
     {
-        return ! empty($this->form->rows());
+        return !empty($this->form->rows());
     }
 
     /**
@@ -539,7 +539,7 @@ class Builder
      */
     public function disableHeader(bool $disable = true)
     {
-        $this->showHeader = ! $disable;
+        $this->showHeader = !$disable;
     }
 
     /**
@@ -549,7 +549,7 @@ class Builder
      */
     public function disableFooter(bool $disable = true)
     {
-        $this->showFooter = ! $disable;
+        $this->showFooter = !$disable;
     }
 
     /**
@@ -567,7 +567,7 @@ class Builder
      */
     public function getElementId()
     {
-        return $this->elementId ?: ($this->elementId = 'form-'.Str::random(8));
+        return $this->elementId ?: ($this->elementId = 'form-' . Str::random(8));
     }
 
     public function pushField(Field $field)
@@ -602,13 +602,13 @@ class Builder
     {
         $previous = Helper::getPreviousUrl();
 
-        if (! $previous || $previous == URL::current()) {
+        if (!$previous || $previous == URL::current()) {
             return;
         }
 
         if (
             Str::contains($previous, url($this->resource()))
-            && ! Helper::urlHasQuery($previous, [DialogForm::QUERY_NAME])
+            && !Helper::urlHasQuery($previous, [DialogForm::QUERY_NAME])
         ) {
             $this->addHiddenField(
                 (new Hidden(static::PREVIOUS_URL_KEY))->value($previous)
@@ -649,7 +649,7 @@ class Builder
             $html[] = "$name=\"$value\"";
         }
 
-        return '<form '.implode(' ', $html).' '.Admin::getPjaxContainerId().'>';
+        return '<form ' . implode(' ', $html) . ' ' . Admin::getPjaxContainerId() . '>';
     }
 
     /**
@@ -684,7 +684,7 @@ class Builder
      */
     protected function removeReservedFields()
     {
-        if (! $this->isMode(static::MODE_CREATE)) {
+        if (!$this->isMode(static::MODE_CREATE)) {
             return;
         }
 
@@ -714,7 +714,7 @@ class Builder
 
         if ($this->form->hasTab()) {
             $this->form->getTab()->getTabs()->transform(function ($item) use ($reject) {
-                if (! empty($item['fields'])) {
+                if (!empty($item['fields'])) {
                     $item['fields'] = $item['fields']->reject($reject);
                 }
 
@@ -740,7 +740,7 @@ class Builder
      */
     public function renderFooter()
     {
-        if (! $this->showFooter) {
+        if (!$this->showFooter) {
             return;
         }
 
@@ -773,7 +773,7 @@ class Builder
 
         $tabObj = $this->form->getTab();
 
-        if (! $tabObj->isEmpty()) {
+        if (!$tabObj->isEmpty()) {
             $tabObj->addScript();
         }
 
@@ -786,7 +786,7 @@ class Builder
         if ($this->layout->hasColumns()) {
             $content = $this->doWrap(view($this->view, $this->variables()));
         } else {
-            if (! $this->layout->hasBlocks()) {
+            if (!$this->layout->hasBlocks()) {
                 $this->layout->prepend(
                     12,
                     $this->doWrap(view($this->view, $this->variables()))
@@ -839,7 +839,7 @@ JS
         $html = '';
 
         foreach ($this->hiddenFields as $field) {
-            if (! $field->hasAttribute(Field::BUILD_IGNORE)) {
+            if (!$field->hasAttribute(Field::BUILD_IGNORE)) {
                 $html .= $field->render();
             }
         }

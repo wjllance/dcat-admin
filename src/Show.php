@@ -206,7 +206,7 @@ class Show implements Renderable
      */
     public function getKey()
     {
-        return $this->_id;
+        return htmlspecialchars($this->_id);
     }
 
     /**
