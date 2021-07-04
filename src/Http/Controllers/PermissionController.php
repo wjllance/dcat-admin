@@ -144,7 +144,7 @@ class PermissionController extends AdminController
 
     public function getRoutes()
     {
-        $prefix = config('admin.route.prefix');
+        $prefix = (string) config('admin.route.prefix');
 
         $container = collect();
 
